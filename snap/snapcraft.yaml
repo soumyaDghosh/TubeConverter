@@ -120,11 +120,11 @@ slots:
     interface: dbus
     bus: session
     name: org.nickvision.tubeconverter
-  unity:
+plugs:
+  unity7:
     interface: dbus
     bus: session
     name: com.canonical.Unity
-
 apps:
   tube-converter:
     command: usr/bin/org.nickvision.tubeconverter
@@ -139,3 +139,4 @@ apps:
       - network
       - network-status
       - mount-observe
+      - unity7
