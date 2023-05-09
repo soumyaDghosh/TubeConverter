@@ -57,8 +57,8 @@ parts:
     # Build from source because the ffmpeg package installs libraries as dependencies
     # that conflict with the Gnome extension
     plugin: autotools
-    source: https://ffmpeg.org/releases/ffmpeg-6.0.tar.xz
-    source-checksum: sha256/57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082
+    source: https://git.ffmpeg.org/ffmpeg.git
+    source-tag: n6.0
     autotools-configure-parameters:
       # WORKAROUND: Install to /usr instead of /usr/local because it's not in search paths
       - --prefix=/usr
@@ -80,7 +80,7 @@ parts:
     stage-packages:
       - libmp3lame0
     prime:
-      - -usr/include
+      - usr/include
   tube-converter:
     after: [ ffmpeg, yt-dlp ]
     plugin: dump
@@ -109,7 +109,7 @@ parts:
       just publish-self-contained /usr
       just install $CRAFT_PRIME
       sed -i "2 i export TC_PYTHON_SO=$TC_PYTHON_SO" $CRAFT_PRIME/usr/bin/org.nickvision.tubeconverter
-      sed -i "s|Exec=/usr/bin/org.nickvision.tubeconverter --gapplication-service|Exec=/snap/tube-converter/current/usr/bin/org.nickvision.tubeconverter --gapplication-service|" $CRAFT_PRIME/usr/share/dbus-1/services/org.nickvision.tubeconverter.service
+      #sed -i "s|Exec=/usr/bin/org.nickvision.tubeconverter --gapplication-service|Exec=/snap/tube-converter/current/usr/bin/org.nickvision.tubeconverter --gapplication-service|" $CRAFT_PRIME/usr/share/dbus-1/services/org.nickvision.tubeconverter.service
     parse-info: [usr/share/metainfo/org.nickvision.tubeconverter.metainfo.xml]
     prime:
       - usr/*
@@ -119,11 +119,11 @@ slots:
   tube-converter:
     interface: dbus
     bus: session
-    name: org.nickvision.tubeconverter    
-  #unity:
-  #  interface: dbus
-  #  bus: session
-  #  name: com.canonical.Unity
+    name: org.nickvision.tubeconverter
+  unity:
+    interface: dbus
+    bus: session
+    name: com.canonical.Unity
 
 apps:
   tube-converter:
@@ -139,4 +139,3 @@ apps:
       - network
       - network-status
       - mount-observe
-      - unity7
